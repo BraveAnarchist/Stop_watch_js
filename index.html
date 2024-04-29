@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+
+    .main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .time {
+        font-size: 7rem;
+        font-weight: 700;
+        color: #f92672;
+        text-align: center;
+    }
+
+    .btns button {
+        background-color: #f92672;
+        color: white;
+        border: none;
+        font-size: 2rem;
+        font-weight: bold;
+        padding: 1.5rem 4rem;
+        margin: 1rem;
+        border-radius: 30px;
+        cursor: pointer;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        transition: all 0.2s;
+    }
+</style>
+
+<body>
+    <div class="main">
+        <div class="hero">
+            <div class="time">
+                <span class="hr">00:</span>
+                <span class="min">00:</span>
+                <span class="sec">00</span>
+                <span class="decS"></span>
+            </div>
+            <div class="btns">
+                <button>Start</button>
+                <button>Stop</button>
+                <button>Reset</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let hour = document.querySelector(".time span:nth-child(1)");
+        let minute = document.querySelector(".time span:nth-child(2)");
+        let second = document.querySelector(".time span:nth-child(3)");
+        let d_second = document.querySelector(".time span:nth-child(4)");
+        let flag = false;
+        let decS = 0;
+        let sec = 0;
+        let min = 0;
+        let hr = 0;
+        let id;
+        const start = document.querySelector(".btns button:nth-child(1)");
+        const stop = document.querySelector(".btns button:nth-child(2)");
+        const reset = document.querySelector(".btns button:nth-child(3)");
+
+        start.addEventListener("click", () => { starter() });
+
+        stop.addEventListener("click", () => { stopper() });
+
+        reset.addEventListener("click", () => { resetter() });
+
+        function starter() {
+            if (flag == false) {
+                flag = true;
+                id = setInterval(update, 10);
+            }
+        }
+
+        function stopper() {
+            if (flag == true) {
+                flag = false;
+                clearInterval(id);
+            }
+        }
+
+        function resetter() {
+            flag = false;
+            clearInterval(id);
+            sec = 0;
+            minutes = 0;
+            hours = 0;
+            decS = "";
+            display();
+        }
+
+        function display() {
+            hour.innerText = hr < 10 ? "0" + hr : hr;
+            minute.innerText = min < 10 ? "0" + min : min;
+            second.innerText = sec < 10 ? "0" + sec : sec;
+            d_second.innerText = decS < 10 && decS != " " ? "0" + decS : decS;
+        }
+
+        function update() {
+            decS++;
+            if (decS === 100) {
+                decS = 0;
+                sec++;
+            }
+            if (sec === 60) {
+                sec = 0;
+                min++;
+            }
+            if (min === 60) {
+                min = 0;
+                hr++;
+            }
+            display();
+        }
+
+
+    </script>
+</body>
+
+</html>
